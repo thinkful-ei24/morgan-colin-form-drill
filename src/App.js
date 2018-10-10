@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import {reduxForm, Field} from 'redux-form';
 import Input from './components/input';
-//import {register} from './actions';
-//import {required, nonEmpty} from './validators';
+import {submitComplaint} from './actions/actions.js';
+import {required, nonEmpty, lengthCheck, isNumber} from './validators/validator.js';
 
 class App extends Component {
   render() {
     return (
       <div>
         <h1>Report a problem with your delivery</h1>
-        <form onSubmit={this.props.handleSubmit(() => console.log('hello'))}>
+
+        {this.props.submitSucceeded && <div>Report submitted successfully</div>}
+        {this.props.submitSucceeded || <div>THIS IS RETURNED</div>}
+
+        <form onSubmit={this.props.handleSubmit((value) => this.props.dispatch(submitComplaint(value)))}>
           <Field
             component={Input}
             element="input"
-            type="number"
+            type="text"
             name="trackingNumber"
             label="Tracking Number"
+            validate={[required, nonEmpty, lengthCheck, isNumber]}
           />
           <Field
             component={Input}
@@ -23,11 +28,11 @@ class App extends Component {
             name="issue"
             label="What is your issue?"
           >
-            <option>My delivery hasn't arrived</option>
-            <option>The wrong item was delivered</option>
-            <option>Part of my order was missing</option>
-            <option>Some of my order arrived damaged</option>
-            <option>Other (give details below)</option>
+            <option value="not-delivered" >My delivery hasn't arrived</option>
+            <option value="wrong-item">The wrong item was delivered</option>
+            <option value="missing-part">Part of my order was missing</option>
+            <option value="damaged">Some of my order arrived damaged</option>
+            <option value="other">Other (give details below)</option>
           </Field>
             <br/>
             <Field
@@ -45,5 +50,8 @@ class App extends Component {
 }
 
 export default reduxForm({
-  form: 'register'
+  form: 'register',
+  initialValues: {
+    issue: "not-delivered"
+  }
 })(App);
