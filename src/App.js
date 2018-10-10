@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {reduxForm, Field} from 'redux-form';
-//import Input from './input';
+import Input from './components/input';
 //import {register} from './actions';
 //import {required, nonEmpty} from './validators';
 
@@ -9,26 +9,29 @@ class App extends Component {
     return (
       <div>
         <h1>Report a problem with your delivery</h1>
-        <form>
+        <form onSubmit={this.props.handleSubmit(() => console.log('hello'))}>
           <Field
-            input id="tracking-number"
-            name="Tracking Number"
-            component="input"
+            component={Input}
+            element="input"
+            type="number"
+            name="trackingNumber"
+            label="Tracking Number"
           />
-          <br/>
-          <label>What is your issue?<br/>
-            <Field select>
-              <option>My delivery hasn't arrived</option>
-              <option>The wrong item was delivered</option>
-              <option>Part of my order was missing</option>
-              <option>Some of my order arrived damaged</option>
-              <option>Other (give details below)</option>
+          <Field
+            component={Input}
+            element="select"
+            name="issue"
+            label="What is your issue?"
+          >
+            <option>My delivery hasn't arrived</option>
+            <option>The wrong item was delivered</option>
+            <option>Part of my order was missing</option>
+            <option>Some of my order arrived damaged</option>
+            <option>Other (give details below)</option>
           </Field>
-            </label>
             <br/>
             <label>Give more details (optional)<br/>
-              <Field textarea
-              />
+              {/* <Field /> */}
             </label>
           <br/>
           <button>Submit</button>
