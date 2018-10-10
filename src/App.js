@@ -1,28 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {reduxForm, Field} from 'redux-form';
+//import Input from './input';
+//import {register} from './actions';
+//import {required, nonEmpty} from './validators';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <h1>Report a problem with your delivery</h1>
+        <form>
+          <Field
+            input id="tracking-number"
+            name="Tracking Number"
+            component="input"
+          />
+          <br/>
+          <label>What is your issue?<br/>
+            <Field select>
+              <option>My delivery hasn't arrived</option>
+              <option>The wrong item was delivered</option>
+              <option>Part of my order was missing</option>
+              <option>Some of my order arrived damaged</option>
+              <option>Other (give details below)</option>
+          </Field>
+            </label>
+            <br/>
+            <label>Give more details (optional)<br/>
+              <Field textarea
+              />
+            </label>
+          <br/>
+          <button>Submit</button>
+        </form>
       </div>
     );
   }
 }
 
-export default App;
+export default reduxForm({
+  form: 'register'
+})(App);
