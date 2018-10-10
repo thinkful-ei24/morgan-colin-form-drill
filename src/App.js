@@ -6,12 +6,13 @@ import {required, nonEmpty, lengthCheck, isNumber} from './validators/validator.
 
 class App extends Component {
   render() {
+    console.log(this.props);
     return (
       <div>
         <h1>Report a problem with your delivery</h1>
 
         {this.props.submitSucceeded && <div>Report submitted successfully</div>}
-        {this.props.submitSucceeded || <div>THIS IS RETURNED</div>}
+        {this.props.submitFailed && <div>Delivery not found</div>}
 
         <form onSubmit={this.props.handleSubmit((value) => this.props.dispatch(submitComplaint(value)))}>
           <Field

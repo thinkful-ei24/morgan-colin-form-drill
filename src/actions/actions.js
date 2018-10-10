@@ -8,7 +8,6 @@ export const submitComplaint = value => dispatch => {
       'Content-Type': 'application/json'
     }
   })
-    .then(res => res.json())
     .then(res => {
       if(!res.ok) {
         if (
@@ -28,7 +27,8 @@ export const submitComplaint = value => dispatch => {
           message: res.statusText
         });
       }
-      console.log(res);
+      return res.json();
     })
-  .catch(err => Promise.reject(new SubmissionError({[err.location]: err.message})));
+    .then(res => console.log(res))
+    .catch(err => Promise.reject(new SubmissionError({_error: err})));
 }
