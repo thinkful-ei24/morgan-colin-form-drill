@@ -30,11 +30,14 @@ class App extends Component {
             <option>Other (give details below)</option>
           </Field>
             <br/>
-            <label>Give more details (optional)<br/>
-              {/* <Field /> */}
-            </label>
+            <Field
+            component={Input}
+            element="textarea"
+            name="details"
+            label="Give more details (optional)"
+          />
           <br/>
-          <button>Submit</button>
+          <button type="submit">Submit</button>
         </form>
       </div>
     );
